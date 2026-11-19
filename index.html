@@ -10,13 +10,13 @@
 <section class="grid">
 <div class="metric"><label>대기시간</label><b id="wait">00:00:00</b></div><div class="metric"><label>주행시간</label><b id="drive">00:00:00</b></div>
 <div class="metric"><label>주행거리</label><b id="distance">0.0 km</b></div><div class="metric"><label>예상 유류비</label><b id="cost">0원</b></div></section>
-<section class="controls"><p id="hint">운행을 시작할 준비가 되면 눌러주세요</p>
+<section class="controls"><div class="modebar"><button id="manualMode" class="mode active" type="button">수동</button><button id="autoMode" class="mode" type="button">자동 GPS</button></div><p id="hint">운행을 시작할 준비가 되면 눌러주세요</p>
 <button id="main" class="main red"><span id="symbol">▶</span><strong id="action">운행 시작</strong><small id="sub">터치하면 대기시간 측정 시작</small></button>
 <button id="finish" class="finish" hidden>오늘 운행 종료 및 기록 저장</button></section>
 <section class="panel"><div class="panelhead"><h2>오늘의 운행 정보</h2><span id="gps">GPS 대기</span></div>
-<div class="line"><span>시작 시각</span><b id="started">-</b></div><div class="line"><span>현재 구간 시작</span><b id="phaseStarted">-</b></div>
+<div class="line"><span>GPS 정확도</span><b id="accuracy">-</b></div><div class="line"><span>GPS 판정</span><b id="gpsDecision">대기</b></div><div class="line"><span>시작 시각</span><b id="started">-</b></div><div class="line"><span>현재 구간 시작</span><b id="phaseStarted">-</b></div>
 <div class="line"><span>누적 대기시간</span><b id="waitTotal">0분</b></div><div class="line"><span>누적 주행시간</span><b id="driveTotal">0분</b></div>
-<p class="note">GPS 거리 측정은 주행 중에만 작동합니다. iPhone에서 화면 잠금 또는 백그라운드 전환 시 GPS 측정이 제한될 수 있습니다.</p></section>
+<p class="note">자동 GPS는 위치가 충분히 정확할 때만 이동/정차를 판정합니다. GPS 신호가 없거나 화면 잠금·백그라운드 상태에서는 정확한 기록을 보장할 수 없습니다. 정차시간은 실제 엔진 공회전 여부를 뜻하지 않습니다.</p></section>
 <section class="panel"><details><summary>연비 · 유류비 설정</summary><div class="settings">
 <label>주행 평균연비 (km/L)<input id="efficiency" type="number" min=".1" step=".1" value="9"></label>
 <label>유가 (원/L)<input id="price" type="number" min="0" step="10" value="1800"></label>
