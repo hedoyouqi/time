@@ -2,18 +2,18 @@
 <html lang="ko"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#dc3030"><meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="운행일지">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="주행일지">
 <link rel="apple-touch-icon" href="./icon-192.png"><link rel="manifest" href="./manifest.webmanifest">
-<link rel="stylesheet" href="./style.css"><title>운행일지</title></head>
+<link rel="stylesheet" href="./style.css"><title>주행일지</title></head>
 <body><main class="app">
-<header class="topbar"><button type="button" id="homeRefresh" class="brand-home" aria-label="운행일지 홈으로 새로고침"><small>PERSONAL DRIVE LOG</small><span class="brand-title">운행일지 <span class="refresh-icon" aria-hidden="true">↻</span></span></button><div class="clockbox" aria-label="현재 날짜 및 시간"><span id="liveDate">----.--.--</span><strong id="liveClock">--:--:--</strong></div><div class="topright"><span id="currentMode" class="mode-indicator manual">수동 모드</span><span id="status" class="pill red">시작 전</span></div></header>
+<header class="topbar"><button type="button" id="homeRefresh" class="brand-home" aria-label="주행일지 홈으로 새로고침"><small>PERSONAL DRIVE LOG</small><span class="brand-title">주행일지 <span class="refresh-icon" aria-hidden="true">↻</span></span></button><div class="clockbox" aria-label="현재 날짜 및 시간"><span id="liveDate">----.--.--</span><strong id="liveClock">--:--:--</strong></div><div class="topright"><span id="currentMode" class="mode-indicator manual">수동 모드</span><span id="status" class="pill red">시작 전</span></div></header>
 <section class="grid">
 <div class="metric"><label>대기시간</label><b id="wait">00:00:00</b></div><div class="metric"><label>주행시간</label><b id="drive">00:00:00</b></div>
 <div class="metric"><label>주행거리</label><b id="distance">0.0 km</b></div><div class="metric"><label>예상 유류비</label><b id="cost">0원</b></div></section>
-<section class="controls"><div class="modebar"><button id="manualMode" class="mode active" type="button">수동</button><button id="autoMode" class="mode" type="button">자동 GPS</button></div><p id="hint">운행을 시작할 준비가 되면 눌러주세요</p>
-<button id="main" class="main red"><span id="symbol">▶</span><strong id="action">운행 시작</strong><small id="sub">터치하면 대기시간 측정 시작</small></button>
-<button id="finish" class="finish" hidden>오늘 운행 종료 및 기록 저장</button></section>
-<section class="panel"><div class="panelhead"><h2>오늘의 운행 정보</h2><span id="gps">GPS 대기</span></div>
+<section class="controls"><div class="modebar"><button id="manualMode" class="mode active" type="button">수동</button><button id="autoMode" class="mode" type="button">자동 GPS</button></div><p id="hint">주행을 시작할 준비가 되면 눌러주세요</p>
+<button id="main" class="main red"><span id="symbol">▶</span><strong id="action">주행 시작</strong><small id="sub">터치하면 대기시간 측정 시작</small></button>
+<button id="finish" class="finish" hidden>오늘 주행 종료 및 기록 저장</button></section>
+<section class="panel"><div class="panelhead"><h2>오늘의 주행 정보</h2><span id="gps">GPS 대기</span></div>
 <div class="line"><span>GPS 정확도</span><b id="accuracy">-</b></div><div class="line"><span>GPS 판정</span><b id="gpsDecision">대기</b></div><div class="line"><span>시작 시각</span><b id="started">-</b></div><div class="line"><span>현재 구간 시작</span><b id="phaseStarted">-</b></div>
 <div class="line"><span>누적 대기시간</span><b id="waitTotal">0분</b></div><div class="line"><span>누적 주행시간</span><b id="driveTotal">0분</b></div>
 <p class="note">자동 GPS는 위치가 충분히 정확할 때만 이동/정차를 판정합니다. GPS 신호가 없거나 화면 잠금·백그라운드 상태에서는 정확한 기록을 보장할 수 없습니다. 정차시간은 실제 엔진 공회전 여부를 뜻하지 않습니다.</p></section>
@@ -22,6 +22,6 @@
 <label>유가 (원/L)<input id="price" type="number" min="0" step="10" value="1800"></label>
 <label>공회전 소모량 (L/h)<input id="idle" type="number" min="0" step=".1" value=".8"></label>
 <button id="saveSettings" class="secondary">설정 저장</button><p class="note">주행 유류비 = 거리 ÷ 평균연비 × 유가<br>대기 유류비 = 대기시간 × 시간당 공회전 소모량 × 유가</p></div></details></section>
-<section class="panel"><div class="panelhead"><h2>운행 기록</h2><div><button id="csv" class="link">CSV 백업</button><button id="clear" class="link danger">전체 삭제</button></div></div><div id="history"><p class="empty">저장된 운행 기록이 없습니다.</p></div></section>
-<footer>운행 기록은 이 iPhone의 브라우저 내부에 저장됩니다.</footer>
+<section class="panel"><div class="panelhead"><h2>주행 기록</h2><div><button id="csv" class="link">CSV 백업</button><button id="clear" class="link danger">전체 삭제</button></div></div><div id="history"><p class="empty">저장된 주행 기록이 없습니다.</p></div></section>
+<footer>주행 기록은 이 iPhone의 브라우저 내부에 저장됩니다.</footer>
 </main><script src="./app.js"></script></body></html>
