@@ -6,7 +6,7 @@
 <link rel="apple-touch-icon" href="./icon-192.png"><link rel="manifest" href="./manifest.webmanifest">
 <link rel="stylesheet" href="./style.css"><title>운행일지</title></head>
 <body><main class="app">
-<header><div><small>PERSONAL DRIVE LOG</small><h1>운행일지</h1></div><span id="status" class="pill red">시작 전</span></header>
+<header class="topbar"><button type="button" id="homeRefresh" class="brand-home" aria-label="운행일지 홈으로 새로고침"><small>PERSONAL DRIVE LOG</small><span class="brand-title">운행일지 <span class="refresh-icon" aria-hidden="true">↻</span></span></button><div class="clockbox" aria-label="현재 날짜 및 시간"><span id="liveDate">----.--.--</span><strong id="liveClock">--:--:--</strong></div><div class="topright"><span id="currentMode" class="mode-indicator manual">수동 모드</span><span id="status" class="pill red">시작 전</span></div></header>
 <section class="grid">
 <div class="metric"><label>대기시간</label><b id="wait">00:00:00</b></div><div class="metric"><label>주행시간</label><b id="drive">00:00:00</b></div>
 <div class="metric"><label>주행거리</label><b id="distance">0.0 km</b></div><div class="metric"><label>예상 유류비</label><b id="cost">0원</b></div></section>

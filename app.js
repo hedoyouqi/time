@@ -8,7 +8,18 @@ const date=t=>new Date(t).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',
 const won=n=>Math.round(n).toLocaleString('ko-KR')+'원';
 function sums(){if(!state)return{w:0,d:0};let elapsed=Math.max(0,Date.now()-state.phaseAt);let valid=state.mode!=='auto'||(lastGoodFixAt&&Date.now()-lastGoodFixAt<12000);return{w:state.wait+(valid&&state.phase==='wait'?elapsed:0),d:state.drive+(valid&&state.phase==='drive'?elapsed:0)}}
 function costs(w=0,dist=0){let idleLitres=w/3600000*settings.idle,driveLitres=dist/settings.efficiency;return{idle:idleLitres*settings.price,drive:driveLitres*settings.price,total:(idleLitres+driveLitres)*settings.price}}
+function updateClock(){
+ const now=new Date(), pad=n=>String(n).padStart(2,'0');
+ $('liveDate').textContent=`${now.getFullYear()}.${pad(now.getMonth()+1)}.${pad(now.getDate())}`;
+ $('liveClock').textContent=`${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+}
+function updateModeIndicator(){
+ const mode=state?.mode||selectedMode, el=$('currentMode');
+ el.textContent=mode==='auto'?'자동 GPS':'수동 모드';
+ el.className='mode-indicator '+(mode==='auto'?'auto':'manual');
+}
 function render(){
+ updateModeIndicator();
  $('manualMode').classList.toggle('active',(state?.mode||selectedMode)==='manual');$('autoMode').classList.toggle('active',(state?.mode||selectedMode)==='auto');$('manualMode').disabled=!!state;$('autoMode').disabled=!!state;
  $('accuracy').textContent=last&&last.acc!=null?Math.round(last.acc)+'m':'-';$('gpsDecision').textContent=state?.mode==='auto'?(lastGoodFixAt&&Date.now()-lastGoodFixAt<12000?(state.phase==='drive'?'이동':'정차'):'GPS 신호 대기'):'수동 모드';
  if(!state){$('status').className='pill red';$('status').textContent='시작 전';$('main').className='main red';$('symbol').textContent='▶';$('action').textContent='운행 시작';$('sub').textContent='터치하면 대기시간 측정 시작';$('hint').textContent='운행을 시작할 준비가 되면 눌러주세요';$('finish').hidden=true;$('started').textContent='-';$('phaseStarted').textContent='-';$('wait').textContent='00:00:00';$('drive').textContent='00:00:00';$('distance').textContent='0.0 km';$('cost').textContent='0원';$('waitTotal').textContent='0분';$('driveTotal').textContent='0분';$('gps').textContent=gpsMessage;return}
@@ -67,6 +78,7 @@ function begin(){let t=Date.now();state={start:t,mode:selectedMode,phase:'wait',
 function toggle(){if(state.mode==='auto')return;let next=state.phase==='wait'?'drive':'wait';switchPhase(next);if(next==='drive')startGPS();else stopGPS();save();render()}
 function finish(){if(!confirm('운행을 종료하고 기록을 저장할까요?'))return;let s=sums(),c=costs(s.w,state.km),rec={...state,end:Date.now(),wait:s.w,drive:s.d,cost:c,settings:{...settings}};stopGPS();let h=history();h.unshift(rec);localStorage.setItem(KEY,JSON.stringify({state:null,history:h}));state=null;clearInterval(timer);timer=null;render();showHistory()}
 function showHistory(){let h=history();$('history').innerHTML=h.length?h.map(r=>`<article class="historycard"><b>${date(r.start)} ${r.mode==='auto'?'자동 GPS':'수동'} 운행</b><p>대기 ${fmt(r.wait)} · 주행 ${fmt(r.drive)}<br>거리 ${r.km.toFixed(1)}km · 유류비 ${won(r.cost.total)} (대기 ${won(r.cost.idle)}, 주행 ${won(r.cost.drive)})</p></article>`).join(''):'<p class="empty">저장된 운행 기록이 없습니다.</p>'}
+$('homeRefresh').onclick=()=>{window.scrollTo({top:0,behavior:'instant'});location.reload()};
 $('main').onclick=()=>{if(!state)begin();else toggle()};$('finish').onclick=finish;
 $('manualMode').onclick=()=>{if(!state){selectedMode='manual';render()}};
 $('autoMode').onclick=()=>{if(!state){selectedMode='auto';render()}};
@@ -76,4 +88,5 @@ $('clear').onclick=()=>{if(confirm('모든 저장 기록을 삭제할까요? 복
 $('efficiency').value=settings.efficiency;$('price').value=settings.price;$('idle').value=settings.idle;
 try{state=JSON.parse(localStorage.getItem(KEY)||'{}').state||null}catch{state=null}
 if(state){state.mode=state.mode||'manual';tick();if(state.mode==='auto'||state.phase==='drive')startGPS()}render();showHistory();
+updateClock();setInterval(updateClock,1000);
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
